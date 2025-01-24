@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from repositories -->
 	</parent>
 	<groupId>com.quickcontact</groupId>
 	<artifactId>quickcontact</artifactId>
@@ -52,6 +52,12 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 			<version>9.22.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.30</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
