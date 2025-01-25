@@ -1,33 +1,28 @@
 package com.quickcontact.quickcontact.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerDTO {
 
-    private Long customerId;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
-    private String address;
+    private Long id;
 
-    @Override
-    public String toString() {
-        return "CustomerDTO{" +
-                "customerId=" + customerId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
+    @NotNull(message = "Email may not be null")
+    @Email(message = "Email is not valid")
+    private String email;
+
+    @NotNull(message = "Name may not be null")
+    private String name;
+
+    @NotNull(message = "Password may not be null")
+    private String password;
+
+    private String phone;
 
 }
