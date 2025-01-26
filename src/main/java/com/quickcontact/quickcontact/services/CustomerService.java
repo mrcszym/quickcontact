@@ -1,11 +1,12 @@
 package com.quickcontact.quickcontact.services;
 
 import com.quickcontact.quickcontact.dto.CustomerDTO;
-import com.quickcontact.quickcontact.entities.Customer;
+import com.quickcontact.quickcontact.entities.User;
 import com.quickcontact.quickcontact.exceptions.EmailAlreadyExistsException;
 import com.quickcontact.quickcontact.repositories.CustomerRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,13 +19,20 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public Optional<Customer> getCustomerById(Long id) {
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
+
+    public CustomerService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public Optional<User> getCustomerById(Long id) {
         return customerRepository.findById(id);
     }
 
     public List<CustomerDTO> getAllCustomers() {
-        List<Customer> customers = customerRepository.findAll();
-        return customers.stream()
+        List<User> users = customerRepository.findAll();
+        return users.stream()
                 .map(customer -> new CustomerDTO(
                         customer.getId(),
                         customer.getEmail(),
@@ -36,18 +44,18 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customer addCustomer(CustomerDTO customerDTO) {
+    public User addCustomer(CustomerDTO customerDTO) {
 
         validateIfEmailAlreadyExists(customerDTO);
 
-        Customer customer = new Customer();
+        User user = new User();
 
-        customer.setEmail(customerDTO.getEmail());
-        customer.setName(customerDTO.getName());
-        customer.setPassword(customerDTO.getPassword());
-        customer.setPhone(customerDTO.getPhone());
+        user.setEmail(customerDTO.getEmail());
+        user.setName(customerDTO.getName());
+        user.setPassword(passwordEncoder.encode(customerDTO.getPassword()));
+        user.setPhone(customerDTO.getPhone());
 
-        return customerRepository.save(customer);
+        return customerRepository.save(user);
     }
 
     private void validateIfEmailAlreadyExists(CustomerDTO customerDTO) {
@@ -58,24 +66,39 @@ public class CustomerService {
 
 
     public CustomerDTO updateCustomer(Long id, CustomerDTO customerDTO) {
-        Optional<Customer> existingCustomerOpt = customerRepository.findById(id);
+        Optional<User> existingCustomerOpt = customerRepository.findById(id);
 
         if (existingCustomerOpt.isPresent()) {
-            Customer existingCustomer = existingCustomerOpt.get();
-            existingCustomer.setName(customerDTO.getName());
-            existingCustomer.setEmail(customerDTO.getEmail());
-            existingCustomer.setPhone(customerDTO.getPhone());
+            User existingUser = existingCustomerOpt.get();
+            existingUser.setName(customerDTO.getName());
+            existingUser.setEmail(customerDTO.getEmail());
+            existingUser.setPhone(customerDTO.getPhone());
 
-            existingCustomer = customerRepository.save(existingCustomer);
-            return new CustomerDTO(existingCustomer.getId(),  existingCustomer.getEmail(), existingCustomer.getName(),
-                    existingCustomer.getPassword(), existingCustomer.getPhone());
+            existingUser = customerRepository.save(existingUser);
+            return new CustomerDTO(existingUser.getId(),  existingUser.getEmail(), existingUser.getName(),
+                    existingUser.getPassword(), existingUser.getPhone());
         } else {
-            throw new RuntimeException("Customer not found");
+            throw new RuntimeException("User not found");
         }
     }
 
     public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);
     }
+
+
+//    @Override
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        Optional<User> customer = customerRepository.findByEmail(email);
+//
+//        UserDetails userDetails =
+//                org.springframework.security.core.userdetails.User.builder()
+//                        .username(user.getEmail())
+//                        .password(customer.getPassword())
+//                        .roles(roles.toArray(new String[0]))
+//                        .build();
+//
+//        return userDetails;
+//    }
 
 }

@@ -1,7 +1,7 @@
 package com.quickcontact.quickcontact.controllers;
 
 import com.quickcontact.quickcontact.dto.CustomerDTO;
-import com.quickcontact.quickcontact.entities.Customer;
+import com.quickcontact.quickcontact.entities.User;
 import com.quickcontact.quickcontact.services.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Customer> getCustomerById(@PathVariable Long id) {
+    public Optional<User> getCustomerById(@PathVariable Long id) {
         return customerService.getCustomerById(id);
     }
 
@@ -39,7 +39,7 @@ public class CustomerController {
 
         customerService.addCustomer(customerDto);
 
-        return ResponseEntity.ok("Customer with email = " + customerDto.getEmail() + " created.");
+        return ResponseEntity.ok("User with email = " + customerDto.getEmail() + " created.");
     }
 
     private static ResponseEntity<String> handleErrorMessage(BindingResult result) {
