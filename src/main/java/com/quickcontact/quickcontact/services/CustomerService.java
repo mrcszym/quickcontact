@@ -93,19 +93,4 @@ public class CustomerService {
         customerRepository.deleteById(id);
     }
 
-
-//    @Override
-//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//        Optional<User> customer = customerRepository.findByEmail(email);
-//
-//        UserDetails userDetails =
-//                org.springframework.security.core.userdetails.User.builder()
-//                        .username(user.getEmail())
-//                        .password(customer.getPassword())
-//                        .roles(roles.toArray(new String[0]))
-//                        .build();
-//
-//        return userDetails;
-//    }
-
 }

@@ -32,7 +32,8 @@ public class CustomerController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> addCustomer(@Valid @RequestBody CustomerDTO customerDto, BindingResult result) {
+    public ResponseEntity<String> addCustomer(
+            @Valid @RequestBody CustomerDTO customerDto, BindingResult result) {
         if(result.hasErrors()) {
             return handleErrorMessage(result);
         }
@@ -42,7 +43,7 @@ public class CustomerController {
         return ResponseEntity.ok("User with email = " + customerDto.getEmail() + " created.");
     }
 
-    private static ResponseEntity<String> handleErrorMessage(BindingResult result) {
+    static ResponseEntity<String> handleErrorMessage(BindingResult result) {
         StringBuilder errorMessage = new StringBuilder("Validation failed for fields: ");
         result.getAllErrors().forEach(error -> {
             errorMessage.append(error.getDefaultMessage()).append("; ");
