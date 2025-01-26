@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -36,12 +37,15 @@ public class User implements UserDetails {
     @Column(name = "phone")
     private String phone;
 
+    @ManyToOne(targetEntity = Role.class)
+    private Role role;
+
     public Boolean isEnabled = true;
     public Boolean isNonLocked = true;
 
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority(role.getName()));
     }
 
     @Override

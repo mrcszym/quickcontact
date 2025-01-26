@@ -12,8 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static com.quickcontact.quickcontact.utils.SecurityUtil.PERMITTED_ALL_PATHS;
-import static com.quickcontact.quickcontact.utils.SecurityUtil.USER_PATHS;
+import static com.quickcontact.quickcontact.utils.SecurityUtil.*;
 
 @Configuration
 @EnableWebSecurity
@@ -30,7 +29,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(PERMITTED_ALL_PATHS)
                 .permitAll()
-                .requestMatchers(USER_PATHS).authenticated()
+                .requestMatchers(CUSTOMER_PATHS).authenticated()
                 .anyRequest()
                 .authenticated()
                 .and()

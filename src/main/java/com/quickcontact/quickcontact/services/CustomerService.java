@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.quickcontact.quickcontact.utils.SecurityUtil.ROLE_CUSTOMER;
+
 @Service
 public class CustomerService {
 
@@ -22,8 +24,12 @@ public class CustomerService {
     @Autowired
     private final PasswordEncoder passwordEncoder;
 
-    public CustomerService(PasswordEncoder passwordEncoder) {
+    @Autowired
+    private final RoleService roleService;
+
+    public CustomerService(PasswordEncoder passwordEncoder, RoleService roleService) {
         this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
     }
 
     public Optional<User> getCustomerById(Long id) {
@@ -54,6 +60,7 @@ public class CustomerService {
         user.setName(customerDTO.getName());
         user.setPassword(passwordEncoder.encode(customerDTO.getPassword()));
         user.setPhone(customerDTO.getPhone());
+        user.setRole(roleService.getRoleByName(ROLE_CUSTOMER));
 
         return customerRepository.save(user);
     }
