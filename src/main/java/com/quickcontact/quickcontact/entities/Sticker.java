@@ -17,6 +17,11 @@ public class Sticker {
     @Id
     @GeneratedValue
     private Long id;
+
+    @Column(name = "sticker_info")
     private String stickerInfo;
+
+    @Column(name = "customer_id")
+    private Long customerId;
 
 }

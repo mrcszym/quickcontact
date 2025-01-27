@@ -19,8 +19,11 @@ public class Role {
     @Id
     @GeneratedValue
     private Long id;
+
+    @Column(name = "name", nullable = false)
     private String name;
 
+    // TODO ???
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
     private List<User> users;
 

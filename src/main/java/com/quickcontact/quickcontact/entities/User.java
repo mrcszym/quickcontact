@@ -20,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 public class User implements UserDetails {
 
-    @Column(name = "customer_id", nullable = false)
+    @Column(name = "id", nullable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

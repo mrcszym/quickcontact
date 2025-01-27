@@ -28,7 +28,8 @@ public class StickerService {
         return stickers.stream()
                 .map(sticker -> new StickerDTO(
                         sticker.getId(),
-                        sticker.getStickerInfo()
+                        sticker.getStickerInfo(),
+                        sticker.getCustomerId()
                 ))
                 .collect(Collectors.toList());
     }
@@ -38,6 +39,7 @@ public class StickerService {
 
         Sticker sticker = new Sticker();
         sticker.setStickerInfo(stickerDTO.getStickerInfo());
+        sticker.setCustomerId(stickerDTO.getCustomerId());
 
         return stickerRepository.save(sticker);
     }

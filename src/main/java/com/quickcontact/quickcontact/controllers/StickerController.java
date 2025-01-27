@@ -2,11 +2,13 @@ package com.quickcontact.quickcontact.controllers;
 
 import com.quickcontact.quickcontact.dto.StickerDTO;
 import com.quickcontact.quickcontact.entities.Sticker;
+import com.quickcontact.quickcontact.entities.User;
 import com.quickcontact.quickcontact.services.StickerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,9 +41,18 @@ public class StickerController {
             return handleErrorMessage(result);
         }
 
+        setStickerCustomerIdFromContext(stickerDTO);
         stickerService.addSticker(stickerDTO);
 
         return ResponseEntity.ok("Sticker created");
+    }
+
+    private static void setStickerCustomerIdFromContext(StickerDTO stickerDTO) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof User) {
+            Long userId = ((User) principal).getId();
+            stickerDTO.setCustomerId(userId);
+        }
     }
 
 }

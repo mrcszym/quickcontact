@@ -1,4 +1,7 @@
 CREATE TABLE IF NOT EXISTS STICKERS (
     id BIGSERIAL PRIMARY KEY,
-    sticker_info VARCHAR(255) NOT NULL
+    sticker_info VARCHAR(255),
+    customer_id BIGINT,
+    CONSTRAINT fk_sticker_customer
+    FOREIGN KEY (customer_id) REFERENCES CUSTOMERS(id) ON DELETE SET NULL
 );
