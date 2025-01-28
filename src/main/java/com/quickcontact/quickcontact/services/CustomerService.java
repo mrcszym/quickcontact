@@ -6,6 +6,7 @@ import com.quickcontact.quickcontact.exceptions.EmailAlreadyExistsException;
 import com.quickcontact.quickcontact.repositories.CustomerRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,15 @@ import static com.quickcontact.quickcontact.utils.SecurityUtil.ROLE_CUSTOMER;
 public class CustomerService {
 
     @Autowired
+    @Lazy
     private CustomerRepository customerRepository;
 
     @Autowired
+    @Lazy
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
+    @Lazy
     private final RoleService roleService;
 
     public CustomerService(PasswordEncoder passwordEncoder, RoleService roleService) {

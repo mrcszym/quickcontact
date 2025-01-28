@@ -40,6 +40,9 @@ public class User implements UserDetails {
     @ManyToOne(targetEntity = Role.class)
     private Role role;
 
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Sticker> stickers;
+
     public Boolean isEnabled = true;
     public Boolean isNonLocked = true;
 

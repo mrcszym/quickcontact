@@ -6,6 +6,7 @@ import com.quickcontact.quickcontact.entities.User;
 import com.quickcontact.quickcontact.services.StickerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,10 +23,11 @@ import static com.quickcontact.quickcontact.controllers.CustomerController.handl
 public class StickerController {
 
     @Autowired
+    @Lazy
     private StickerService stickerService;
 
     @GetMapping("/all")
-    public List<StickerDTO> getAllCustomers() {
+    public List<StickerDTO> getAllStickers() {
         return stickerService.getAllStickers();
     }
 

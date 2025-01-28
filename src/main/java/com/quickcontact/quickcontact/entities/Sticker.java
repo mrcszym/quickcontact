@@ -21,7 +21,8 @@ public class Sticker {
     @Column(name = "sticker_info")
     private String stickerInfo;
 
-    @Column(name = "customer_id")
-    private Long customerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+    private User customer;
 
 }
