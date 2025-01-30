@@ -10,7 +10,8 @@ public class SecurityUtil {
 
     public static final String[] CUSTOMER_PATHS = new String[] {
             "/api/customers/**",
-            "/api/stickers/**"
+            "/api/stickers/**",
+            "/api/messages/**"
     };
 
 }

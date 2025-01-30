@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "STICKERS")
 @Data
@@ -24,5 +26,8 @@ public class Sticker {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
     private User customer;
+
+    @OneToMany(mappedBy = "sticker", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Message> messages;
 
 }
