@@ -22,7 +22,7 @@ public class StickerService {
     private final StickerRepository stickerRepository;
 
     public Optional<Sticker> getStickerById(Long id) {
-        return stickerRepository.findById(id);
+        return stickerRepository.findStickerById(id);
     }
 
     public List<StickerDTO> getStickersByCustomerId(Long customerId) {

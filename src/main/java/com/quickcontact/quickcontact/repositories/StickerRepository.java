@@ -7,11 +7,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface StickerRepository extends JpaRepository<Sticker, Long> {
 
     @Query("SELECT s FROM Sticker s WHERE s.customer.id = :customerId")
     List<Sticker> findStickersByCustomerId(@Param("customerId") Long customerId);
+
+    @Query("SELECT s(s.id, s.stickerInfo, s.customer.id) FROM Sticker s WHERE s.customer.id = :customerId")
+    Optional<Sticker> findStickerById(@Param("id") Long id);
 
 }
