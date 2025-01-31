@@ -15,7 +15,7 @@ public interface StickerRepository extends JpaRepository<Sticker, Long> {
     @Query("SELECT s FROM Sticker s WHERE s.customer.id = :customerId")
     List<Sticker> findStickersByCustomerId(@Param("customerId") Long customerId);
 
-    @Query("SELECT s FROM Sticker s LEFT JOIN FETCH s.messages WHERE s.customer.id = :customerId")
-    Optional<Sticker> findStickerById(@Param("customerId") Long customerId);
+    @Query("SELECT s FROM Sticker s LEFT JOIN FETCH s.messages WHERE s.id = :stickerId")
+    Optional<Sticker> findStickerById(@Param("stickerId") Long stickerId);
 
 }

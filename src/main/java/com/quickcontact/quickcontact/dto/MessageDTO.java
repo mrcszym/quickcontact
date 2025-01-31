@@ -15,5 +15,4 @@ public class MessageDTO {
     @NotNull(message = "Message content may not be null")
     private String content;
 
-    private Long stickerId;
 }

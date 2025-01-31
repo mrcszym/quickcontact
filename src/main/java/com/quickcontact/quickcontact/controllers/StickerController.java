@@ -32,8 +32,10 @@ public class StickerController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Sticker> getStickerById(@PathVariable Long id) {
-        return stickerService.getStickerById(id);
+    public ResponseEntity<StickerDTO> getStickerById(@PathVariable Long id) {
+        return stickerService.getStickerById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/add")
