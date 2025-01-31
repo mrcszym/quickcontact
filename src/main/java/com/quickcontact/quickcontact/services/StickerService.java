@@ -1,5 +1,6 @@
 package com.quickcontact.quickcontact.services;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.quickcontact.quickcontact.dto.MessageDTO;
 import com.quickcontact.quickcontact.dto.StickerDTO;
 import com.quickcontact.quickcontact.entities.Sticker;
