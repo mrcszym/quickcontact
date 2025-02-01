@@ -5,12 +5,12 @@ public class SecurityUtil {
 
     public static final String[] PERMITTED_ALL_PATHS = new String[] {
             "/api/rest/auth/login",
-            "/api/customers/add"
+            "/api/customers/add",
+            "/api/stickers/**",
     };
 
     public static final String[] CUSTOMER_PATHS = new String[] {
             "/api/customers/**",
-            "/api/stickers/**",
             "/api/messages/**"
     };
 
