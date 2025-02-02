@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,6 +68,15 @@ public class JWTService {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public Instant getExpirationDateFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(getSingInKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getExpiration().toInstant();
     }
 
     private Key getSingInKey() {

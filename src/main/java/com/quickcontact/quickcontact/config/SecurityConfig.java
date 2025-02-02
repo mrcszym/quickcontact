@@ -1,6 +1,8 @@
 package com.quickcontact.quickcontact.config;
 
-import com.quickcontact.quickcontact.jwt.JWTAuthFilter;
+import com.quickcontact.quickcontact.filters.JWTAuthFilter;
+import com.quickcontact.quickcontact.filters.JwtBlacklistFilter;
+import com.quickcontact.quickcontact.services.BlacklistedTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +24,8 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   BlacklistedTokenService blacklistedTokenService) throws Exception {
         http
                 .cors()
                 .and()
@@ -37,8 +40,9 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
+                .addFilterBefore(new JwtBlacklistFilter(blacklistedTokenService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthFilter, JwtBlacklistFilter.class);
         return http.build();
     }
+
 }

@@ -1,4 +1,4 @@
-package com.quickcontact.quickcontact.jwt;
+package com.quickcontact.quickcontact.filters;
 
 import com.quickcontact.quickcontact.entities.User;
 import com.quickcontact.quickcontact.services.JWTService;

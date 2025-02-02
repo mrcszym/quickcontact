@@ -1,4 +1,4 @@
-package com.quickcontact.quickcontact.jwt;
+package com.quickcontact.quickcontact.utils;
 
 import com.quickcontact.quickcontact.entities.User;
 import io.jsonwebtoken.*;
