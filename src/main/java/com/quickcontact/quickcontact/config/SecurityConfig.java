@@ -1,7 +1,6 @@
 package com.quickcontact.quickcontact.config;
 
 import com.quickcontact.quickcontact.jwt.JWTAuthFilter;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,17 +20,18 @@ public class SecurityConfig {
 
     private final JWTAuthFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http
+                .cors()
+                .and()
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(PERMITTED_ALL_PATHS)
-                .permitAll()
+                .requestMatchers(PERMITTED_ALL_PATHS).permitAll()
                 .requestMatchers(CUSTOMER_PATHS).authenticated()
-                .anyRequest()
-                .authenticated()
+                .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -41,5 +41,4 @@ public class SecurityConfig {
 
         return http.build();
     }
-
 }
